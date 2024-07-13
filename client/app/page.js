@@ -1,30 +1,14 @@
 "use client";
 
-import { useUser } from "@/app/utils/user-context";
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Image,
-  Input,
-  Text,
-  Textarea,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Image, Input, Text, Textarea, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import BlurBackground from "./landing/blur-background";
+import BlurBackground from "./components/blur-background";
+import GenerateButton from "./components/generate-button";
 
 const Section = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const router = useRouter();
-  const { searchCompany } = useUser();
-
-  const handleGenerate = () => {
-    searchCompany("Amazon");
-    router.push("/dash");
-  };
+  const [companyName, setCompanyName] = useState("");
+  const [companyInfo, setCompanyInfo] = useState("");
 
   return (
     <VStack w="full" alignItems="center">
@@ -57,6 +41,7 @@ const Section = () => {
           borderColor="gray.400"
           borderRadius="lg"
           style={{ backdropFilter: "blur(300px)", filter: "brightness(1.1)" }}
+          onChange={(e) => setCompanyName(e.target.value)}
         />
       </motion.div>
       <motion.div
@@ -73,6 +58,7 @@ const Section = () => {
           borderColor="gray.400"
           borderRadius="lg"
           style={{ backdropFilter: "blur(300px)", filter: "brightness(1.1)" }}
+          onChange={(e) => setCompanyInfo(e.target.value)}
         />
       </motion.div>
       <motion.div
@@ -80,36 +66,7 @@ const Section = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
       >
-        <Button
-          colorScheme="blue"
-          mt={4}
-          rightIcon={
-            <motion.div
-              initial={{ x: 0 }}
-              animate={{ x: isHovered ? 5 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ChevronRightIcon />
-            </motion.div>
-          }
-          as={motion.button}
-          initial={{
-            background:
-              "linear-gradient(to bottom, rgba(59, 130, 246, 0.9), rgba(0, 99, 235, 0.9))",
-          }}
-          whileHover={{
-            background:
-              "linear-gradient(to bottom, rgba(59, 130, 246, 0.4), rgba(0, 99, 235, 0.4))",
-            transition: { duration: 0.2 },
-          }}
-          border="1px"
-          borderColor="blue.500"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onClick={handleGenerate}
-        >
-          Generate
-        </Button>
+        <GenerateButton companyName={companyName} companyInfo={companyInfo} />
       </motion.div>
     </VStack>
   );
