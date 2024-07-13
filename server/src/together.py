@@ -6,14 +6,69 @@ import openai
 from pydantic import BaseModel
 import instructor
 
+from typing import List
+
+class PersonParagraphThoughts(BaseModel):
+    inner_thought: str
+    outer_thought: str
+    level_of_interest: int
 
 class Together:
     @classmethod
     def initialize(cls):
-        cls.client = openai.OpenAI(
+        cls.inital_client = openai.OpenAI(
             base_url="https://api.together.xyz/v1",
             api_key=TOGETHER_API_KEY,
         )
+
+        cls.client = instructor.from_openai(cls.inital_client, mode=instructor.Mode.TOOLS)
+
+    @classmethod
+    def simulate_once(
+        cls,
+        company_name: str,
+        company_description: str,
+        person_name: str,
+        person_title: str,
+        person_description: str,
+        sales_pitch: List[str],
+    ) -> List[PersonParagraphThoughts]:
+        results = []
+
+        # parallelize this maybe, not big deal
+        for idx in range(len(sales_pitch)):
+            messages = [
+                {
+                    "role": "system",
+                    "content": sales_pitch_system_short.format(
+                        # add company name
+                        person_name=person_name,
+                        person_title=person_title,
+                        person_description=person_description,
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": "\n".join(
+                        [paragraph for paragraph in sales_pitch[: idx + 1]]
+                    ),
+                },
+            ]
+
+            user: PersonParagraphThoughts = cls.client.chat.completions.create(
+                model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+                response_model=PersonParagraphThoughts,
+                messages=messages,
+            )
+
+            assert isinstance(
+                user, PersonParagraphThoughts
+            ), "Should be instance of UserExtract"
+
+            print(user.model_dump_json(indent=2))
+            results.append(user)
+
+        return results
 
 
 if __name__ == "__main__":
@@ -24,11 +79,6 @@ if __name__ == "__main__":
 
     # By default, the patch function will patch the ChatCompletion.create and ChatCompletion.create methods to support the response_model parameter
     client = instructor.from_openai(client, mode=instructor.Mode.TOOLS)
-
-    class PersonParagraphThoughts(BaseModel):
-        inner_thought: str
-        outer_thought: str
-        level_of_interest: int
         # buy: bool
 
     person_name = "Jane Doe"
@@ -42,32 +92,12 @@ if __name__ == "__main__":
         "Is this something you're dealing with? If so, just hit reply and let's chat.",
     ]
 
-    for idx in range(len(sales_pitch)):
-        messages = [
-            {
-                "role": "system",
-                "content": sales_pitch_system_short.format(
-                    person_name=person_name,
-                    person_title=person_title,
-                    person_description=person_description,
-                ),
-            },
-            {
-                "role": "user",
-                "content": "\n".join(
-                    [paragraph for paragraph in sales_pitch[: idx + 1]]
-                ),
-            },
-        ]
-
-        user: PersonParagraphThoughts = client.chat.completions.create(
-            model="mistralai/Mixtral-8x7B-Instruct-v0.1",
-            response_model=PersonParagraphThoughts,
-            messages=messages,
-        )
-
-        assert isinstance(
-            user, PersonParagraphThoughts
-        ), "Should be instance of UserExtract"
-
-        print(user.model_dump_json(indent=2))
+    Together.initialize()
+    print(Together.simulate_once(
+        company_name="Hiline",
+        company_description="",
+        person_name=person_name,
+        person_title=person_title,
+        person_description=person_description,
+        sales_pitch=sales_pitch,
+    ))
