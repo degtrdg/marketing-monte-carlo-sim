@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 
 # Service initialization
-app: FastAPI = FastAPI(title="Tauri API", version="0.0.1")
+app: FastAPI = FastAPI(title="AGIHouse Hackathons API", version="0.0.1")
 
 # Middlewares
 app.add_middleware(

@@ -6,7 +6,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-IMAGE_NAME="tauri-server"
+IMAGE_NAME="agihouse-server"
 
 docker build -t $IMAGE_NAME .
 

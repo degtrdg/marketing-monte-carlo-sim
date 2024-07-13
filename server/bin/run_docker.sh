@@ -8,8 +8,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Image and Container names
-IMAGE_NAME="tauri-server"
-CONTAINER_NAME="tauri-server-container"
+IMAGE_NAME="agihouse-server"
+CONTAINER_NAME="agihouse-server-container"
 
 # Check if a container with the same name is already running
 if docker ps -a | grep -q $CONTAINER_NAME; then
