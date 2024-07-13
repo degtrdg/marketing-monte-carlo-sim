@@ -1,95 +1,128 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Image,
+  Input,
+  Text,
+  Textarea,
+  VStack,
+} from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import BlurBackground from "./landing/blur-background";
+
+const Section = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <VStack w="full" alignItems="center">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0 }}
+      >
+        <Image src="/logo.png" alt="AI Sales Thing" width={100} height={100} />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <Text fontSize="5xl" fontWeight="bold" mb={12}>
+          AI Sales Thing
+        </Text>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        style={{ width: "100%", display: "flex", justifyContent: "center" }}
+      >
+        <Input
+          placeholder="Company Name"
+          w="30%"
+          border="1px"
+          borderColor="gray.400"
+          borderRadius="lg"
+          style={{ backdropFilter: "blur(300px)", filter: "brightness(1.1)" }}
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.9 }}
+        style={{ width: "100%", display: "flex", justifyContent: "center" }}
+      >
+        <Textarea
+          placeholder="Information about your company"
+          w="40%"
+          mb={4}
+          border="1px"
+          borderColor="gray.400"
+          borderRadius="lg"
+          style={{ backdropFilter: "blur(300px)", filter: "brightness(1.1)" }}
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
+      >
+        <Button
+          colorScheme="blue"
+          mt={4}
+          rightIcon={
+            <motion.div
+              initial={{ x: 0 }}
+              animate={{ x: isHovered ? 5 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronRightIcon />
+            </motion.div>
+          }
+          as={motion.button}
+          initial={{
+            background:
+              "linear-gradient(to bottom, rgba(59, 130, 246, 0.9), rgba(0, 99, 235, 0.9))",
+          }}
+          whileHover={{
+            background:
+              "linear-gradient(to bottom, rgba(59, 130, 246, 0.4), rgba(0, 99, 235, 0.4))",
+            transition: { duration: 0.2 },
+          }}
+          border="1px"
+          borderColor="blue.500"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          Generate
+        </Button>
+      </motion.div>
+    </VStack>
+  );
+};
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Box maxW="100vw" maxH="100vh" overflow="hidden" position="relative">
+      <BlurBackground
+        style={{
+          filter: "blur(80px)",
+        }}
+      />
+      <Box
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+        zIndex={1}
+        w="full"
+      >
+        <Section />
+      </Box>
+    </Box>
   );
 }
