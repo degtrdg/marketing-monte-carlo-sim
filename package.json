@@ -1,0 +1,25 @@
+{
+  "name": "template",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "yarn install; yarn workspaces foreach -Api run prepare",
+    "dev": "yarn workspaces foreach -Api run dev",
+    "build": "yarn workspaces foreach -Api run build",
+    "start": "yarn workspaces foreach -Api run start"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "license": "MIT",
+  "packageManager": "yarn@4.2.1",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "commitlint-plugin-function-rules": "^1.7.1",
+    "env-cmd": "^10.1.0",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.5.1"
+  }
+}
