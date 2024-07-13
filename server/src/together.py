@@ -1,6 +1,6 @@
 from together import Together
 from src.config import TOGETHER_API_KEY
-from src.prompts import sales_pitch_simulation_prompt
+from src.prompts import sales_pitch_simulation_prompt, sales_pitch_system_short
 
 import openai
 from pydantic import BaseModel
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         inner_thought: str
         outer_thought: str
         level_of_interest: int
-        buy: bool
+        # buy: bool
 
     person_name = "Jane Doe"
     person_title = "Director of Operations"
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         messages = [
             {
                 "role": "system",
-                "content": sales_pitch_simulation_prompt.format(
+                "content": sales_pitch_system_short.format(
                     person_name=person_name,
                     person_title=person_title,
                     person_description=person_description,
@@ -62,7 +62,6 @@ if __name__ == "__main__":
 
         user: PersonParagraphThoughts = client.chat.completions.create(
             model="mistralai/Mixtral-8x7B-Instruct-v0.1",
-            # model="Snowflake/snowflake-arctic-instruct",
             response_model=PersonParagraphThoughts,
             messages=messages,
         )
