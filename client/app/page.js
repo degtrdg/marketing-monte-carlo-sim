@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/app/utils/user-context";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -11,11 +12,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import BlurBackground from "./landing/blur-background";
 
 const Section = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
+  const { searchCompany } = useUser();
+
+  const handleGenerate = () => {
+    searchCompany("Amazon");
+    router.push("/dash");
+  };
 
   return (
     <VStack w="full" alignItems="center">
@@ -97,6 +106,7 @@ const Section = () => {
           borderColor="blue.500"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={handleGenerate}
         >
           Generate
         </Button>
