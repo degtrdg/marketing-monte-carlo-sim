@@ -78,7 +78,7 @@ export default function Sidebar(props) {
         >
           <Image
             mt={7}
-            src="https://policyviz.com/wp-content/uploads/2020/12/amazon-logo-square.jpg"
+            src={companyInfo?.company_logo}
             alt="Company Logo"
             w={75}
             h={75}
@@ -98,6 +98,13 @@ export default function Sidebar(props) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.3 }}
+        >
+          <Text size="sm">{companyInfo?.tagline || "N/A"}</Text>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.3 }}
         >
           <Text fontSize="xs">{companyInfo?.industry || "N/A"}</Text>
@@ -108,7 +115,7 @@ export default function Sidebar(props) {
           transition={{ delay: 0.8, duration: 0.3 }}
         >
           <Text fontSize="2xs">
-            {companyInfo?.size || "Size not specified"}
+            {companyInfo?.employees || "Size not specified"}
           </Text>
         </motion.div>
         <motion.div
@@ -130,6 +137,7 @@ export default function Sidebar(props) {
               <IconButton
                 aria-label="Company Website"
                 icon={<FaGlobe />}
+                href={companyInfo?.company_url}
                 size="sm"
                 colorScheme="green"
               />
