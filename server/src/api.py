@@ -7,6 +7,7 @@ import os
 
 from src.schemas.requests import CompanyInfo, Person
 from src.together_wrapper import TogetherWrapper
+from src.llm_wrapper import LLMWrapper
 
 
 # Service initialization
@@ -68,7 +69,7 @@ async def fetch_all_company_information(company: str):
     from src.llm_wrapper import CompanyInfoClass
     try:
 
-        company = CompanyInfoClass(company)
+        company = LLMWrapper(company)
         company.get_apollo_data(os.getenv('APOLLO_API_KEY'))
         company.get_company_leaders(os.getenv('APOLLO_API_KEY'))
 

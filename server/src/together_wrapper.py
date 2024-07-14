@@ -40,7 +40,7 @@ class TogetherWrapper:
                         # add company name
                         person_name=person.person_name,
                         person_title=person.person_title[:30],
-                        person_description=person.person_description[:50], # trim it
+                        person_description=person.person_description[:50],  # trim it
                         company_name=company_info.company_name[:30],
                         company_description=cls.adjust_company_description(
                             company_info.company_description
@@ -77,6 +77,13 @@ class TogetherWrapper:
             return "No company description found"
 
         return company_description[:40]
+
+    @classmethod
+    def call(cls, model, messages):
+        return cls.initial_client.chat.completions.create(
+            model=model,
+            messages=messages,
+        )
 
 
 if __name__ == "__main__":
