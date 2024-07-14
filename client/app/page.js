@@ -98,7 +98,7 @@ const Section = () => {
       >
         <GenerateButton
           companyName={companyName}
-          companyDescription={companyInfo}
+          newCompanyInfo={companyInfo}
           post={post}
         />
       </motion.div>
