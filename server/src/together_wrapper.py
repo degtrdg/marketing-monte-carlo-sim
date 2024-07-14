@@ -1,6 +1,7 @@
 from together import Together
 from src.config import TOGETHER_API_KEY
 from src.prompts import sales_pitch_simulation_prompt, sales_pitch_system_short
+from src.schemas import Person, CompanyInfo, PersonParagraphThoughts
 
 import openai
 from pydantic import BaseModel
@@ -8,12 +9,8 @@ import instructor
 
 from typing import List
 
-class PersonParagraphThoughts(BaseModel):
-    inner_thought: str
-    outer_thought: str
-    level_of_interest: int
 
-class Together:
+class TogetherWrapper:
     @classmethod
     def initialize(cls):
         cls.inital_client = openai.OpenAI(
@@ -21,16 +18,15 @@ class Together:
             api_key=TOGETHER_API_KEY,
         )
 
-        cls.client = instructor.from_openai(cls.inital_client, mode=instructor.Mode.TOOLS)
+        cls.client = instructor.from_openai(
+            cls.inital_client, mode=instructor.Mode.TOOLS
+        )
 
     @classmethod
     def simulate_once(
         cls,
-        company_name: str,
-        company_description: str,
-        person_name: str,
-        person_title: str,
-        person_description: str,
+        company_info: CompanyInfo,
+        person: Person,
         sales_pitch: List[str],
     ) -> List[PersonParagraphThoughts]:
         results = []
@@ -42,9 +38,13 @@ class Together:
                     "role": "system",
                     "content": sales_pitch_system_short.format(
                         # add company name
-                        person_name=person_name,
-                        person_title=person_title,
-                        person_description=person_description,
+                        person_name=person.person_name,
+                        person_title=person.person_title,
+                        person_description=person.person_description,
+                        company_name=company_info.company_name,
+                        company_description=cls.adjust_company_description(
+                            company_info.company_description
+                        ),
                     ),
                 },
                 {
@@ -64,11 +64,44 @@ class Together:
             assert isinstance(
                 user, PersonParagraphThoughts
             ), "Should be instance of UserExtract"
-
-            print(user.model_dump_json(indent=2))
+            print("-" * 50)
+            print(f"idx: {idx} {user.model_dump_json(indent=2)}")
+            print("-" * 50)
             results.append(user)
 
         return results
+
+    @classmethod
+    def adjust_company_description(cls, company_description: str):
+        if not company_description:
+            return "No company description found"
+
+        return company_description[:40]
+
+    # @classmethod
+    # def simulate_many(cls,
+    #     people: List[Person],
+    #     sales_pitch: List[str],
+    #     company_info: CompanyInfo,
+    # ) -> List[PersonListThoughts]:
+    #     from concurrent.futures import ThreadPoolExecutor
+
+    #     print(len(people))
+    #     # from tqdm import tqdm
+
+    #     with ThreadPoolExecutor() as executor:
+    #         results = list(
+    #             # tqdm(
+    #             executor.map(cls.simulate_once, [company_info] * len(people), people, [sales_pitch] * len(people), list(range(len(people)))),
+    #             total=len(people),
+    #             desc="Simulating sales pitch",
+    #             unit="chunk",
+    #             # )
+    #         )
+
+    #     results = list(results)
+
+    #     return results
 
 
 if __name__ == "__main__":
@@ -79,11 +112,20 @@ if __name__ == "__main__":
 
     # By default, the patch function will patch the ChatCompletion.create and ChatCompletion.create methods to support the response_model parameter
     client = instructor.from_openai(client, mode=instructor.Mode.TOOLS)
-        # buy: bool
+    # buy: bool
 
     person_name = "Jane Doe"
     person_title = "Director of Operations"
     person_description = "A pragmatic leader with 15 years of experience in streamlining business processes. She's always looking for ways to improve efficiency but is cautious about adopting new technologies without proven ROI."
+    person = Person(
+        person_name=person_name,
+        person_title=person_title,
+        person_description=person_description,
+    )
+    company = CompanyInfo(
+        company_name="Hiline",
+        company_description="A human-in-the-middle technology company that helps businesses manage finances.",
+    )
 
     sales_pitch = [
         "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Speck is solving everyday workplace challenges efficiently.",
@@ -93,11 +135,10 @@ if __name__ == "__main__":
     ]
 
     Together.initialize()
-    print(Together.simulate_once(
-        company_name="Hiline",
-        company_description="",
-        person_name=person_name,
-        person_title=person_title,
-        person_description=person_description,
-        sales_pitch=sales_pitch,
-    ))
+    print(
+        Together.simulate_once(
+            person=person,
+            sales_pitch=sales_pitch,
+            company_info=company,
+        )
+    )
