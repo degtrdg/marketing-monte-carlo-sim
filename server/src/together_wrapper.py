@@ -39,9 +39,9 @@ class TogetherWrapper:
                     "content": sales_pitch_system_short.format(
                         # add company name
                         person_name=person.person_name,
-                        person_title=person.person_title,
-                        person_description=person.person_description,
-                        company_name=company_info.company_name,
+                        person_title=person.person_title[:30],
+                        person_description=person.person_description[:50], # trim it
+                        company_name=company_info.company_name[:30],
                         company_description=cls.adjust_company_description(
                             company_info.company_description
                         ),
@@ -109,9 +109,9 @@ if __name__ == "__main__":
         "Is this something you're dealing with? If so, just hit reply and let's chat.",
     ]
 
-    Together.initialize()
+    TogetherWrapper.initialize()
     print(
-        Together.simulate_once(
+        TogetherWrapper.simulate_once(
             person=person,
             sales_pitch=sales_pitch,
             company_info=company,
