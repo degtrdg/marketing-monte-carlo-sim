@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from openai import OpenAI
 
 class CompanyInfo:
-    def __init__(self, company_name):
+    def __init__(self, company_name, query_person_locations=None, query_seniority_levels=None, query_titles=None):
         self.apollo_data = None
         self.sitemap = None
         self.company_leaders = []
@@ -27,9 +27,9 @@ class CompanyInfo:
         self.raw_address = None
         self.logo_url = None
 
-        self.query_person_locations = ["California, US"]
-        self.query_seniority_levels = ["executive", "director"],
-        self.query_titles = ["CEO", "CTO", "CFO", "COO", "President", "Vice President", "Director", "Senior Engineer"]
+        self.query_person_locations = query_person_locations if query_person_locations else ["California, US"]
+        self.query_seniority_levels = query_seniority_levels if query_seniority_levels else ["executive", "director"],
+        self.query_titles = query_titles if query_titles else ["CEO", "CTO", "CFO", "COO", "President", "Vice President", "Director", "Senior Engineer"]
 
     def get_apollo_data(self, api_key):
         """
