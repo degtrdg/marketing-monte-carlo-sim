@@ -119,7 +119,7 @@ const GenerateModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default function GenerateButton({ companyName, companyInfo }) {
+export default function GenerateButton({ companyName, companyInfo, post }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
@@ -127,12 +127,12 @@ export default function GenerateButton({ companyName, companyInfo }) {
 
   const handleGenerate = () => {
     onOpen();
-    searchCompany(companyName);
-    setTimeout(() => {
-      onClose();
-      router.push("/dash");
-      // }, 15000);
-    }, 24000);
+    searchCompany(companyName, companyInfo, post);
+    // setTimeout(() => {
+    //   onClose();
+    //   router.push("/dash");
+    //   // }, 15000);
+    // }, 24000);
   };
 
   return (
