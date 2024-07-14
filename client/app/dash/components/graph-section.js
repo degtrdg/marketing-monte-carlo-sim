@@ -6,7 +6,10 @@ import { motion } from "framer-motion";
 import LineGraph from "./graphs/line-graph";
 
 export default function GraphSection() {
-  const [lineData, setLineData] = useState([]);
+  const [lineData, setLineData] = useState([{
+    id: "Average Values",
+    data:  [5, 8, 12, 7, 15, 10, 18],
+  }]);
 
   useEffect(() => {
     // Example data - replace this with your actual data source
@@ -31,7 +34,7 @@ export default function GraphSection() {
     });
 
     const formattedData = averagedData.map((value, index) => ({
-      x: `Day ${index + 1}`,
+      x: `Paragraph ${index + 1}`,
       y: value,
     }));
 
@@ -65,7 +68,7 @@ export default function GraphSection() {
         overflow="hidden"
       >
         <Text h="10%" fontWeight="bold" transform="translateY(5px)">
-          Average Values Over Time
+          Average Sentiment Over Time
         </Text>
         <LineGraph data={lineData} h="90%" w="full" />
       </VStack>
