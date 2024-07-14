@@ -11,7 +11,6 @@ class Person(BaseModel):
     person_title: str
     person_description: str
 
-class PersonParagraphThoughts(BaseModel):
-    inner_thought: str
-    outer_thought: str
+class SalesPitchThoughts(BaseModel):
+    thoughts: str
     level_of_interest: int

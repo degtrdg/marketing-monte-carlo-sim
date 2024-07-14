@@ -1,7 +1,7 @@
 from together import Together
 from src.config import TOGETHER_API_KEY
 from src.prompts import sales_pitch_simulation_prompt, sales_pitch_system_short
-from src.schemas import Person, CompanyInfo, PersonParagraphThoughts
+from src.schemas import Person, CompanyInfo, SalesPitchThoughts
 
 import openai
 from pydantic import BaseModel
@@ -28,7 +28,7 @@ class TogetherWrapper:
         company_info: CompanyInfo,
         person: Person,
         sales_pitch: List[str],
-    ) -> List[PersonParagraphThoughts]:
+    ) -> List[SalesPitchThoughts]:
         results = []
 
         # parallelize this maybe, not big deal
@@ -55,14 +55,14 @@ class TogetherWrapper:
                 },
             ]
 
-            user: PersonParagraphThoughts = cls.client.chat.completions.create(
+            user: SalesPitchThoughts = cls.client.chat.completions.create(
                 model="mistralai/Mixtral-8x7B-Instruct-v0.1",
-                response_model=PersonParagraphThoughts,
+                response_model=SalesPitchThoughts,
                 messages=messages,
             )
 
             assert isinstance(
-                user, PersonParagraphThoughts
+                user, SalesPitchThoughts
             ), "Should be instance of UserExtract"
             print("-" * 50)
             print(f"idx: {idx} {user.model_dump_json(indent=2)}")
