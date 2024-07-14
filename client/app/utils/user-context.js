@@ -6,26 +6,35 @@ const UserContext = createContext({
   companyName: "",
   companyInfo: null,
   searchCompany: () => {},
+  pushCompanyInfo: () => {},
 });
 
 export function UserProvider({ children }) {
   const [companyName, setCompanyName] = useState("");
+  const [companyDescription, setCompanyDescription] = useState(null);
   const [companyInfo, setCompanyInfo] = useState(null);
 
-  const searchCompany = async (name) => {
+  const searchCompany = async (name, description) => {
     setCompanyName(name);
     setTimeout(() => {
-      setCompanyInfo({
-        name: name,
-        industry: "Sample Industry",
-        size: "1000-5000 employees",
-        description: "This is a sample company description.",
-      });
+      setCompanyDescription(description);
     }, 1000);
   };
 
+  const pushCompanyInfo = async (info) => {
+    setCompanyInfo(info);
+  };
+
   return (
-    <UserContext.Provider value={{ companyName, companyInfo, searchCompany }}>
+    <UserContext.Provider
+      value={{
+        companyName,
+        companyInfo,
+        companyDescription,
+        searchCompany,
+        pushCompanyInfo,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
