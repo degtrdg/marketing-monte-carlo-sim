@@ -26,7 +26,7 @@ export default function LineGraph({ data, ...props }) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 60,
-          legend: "Datetime (UTC)",
+          legend: "Paragraph Number",
           legendOffset: -10,
           legendPosition: "middle",
         }}
@@ -34,7 +34,7 @@ export default function LineGraph({ data, ...props }) {
           tickSize: 8,
           tickPadding: 3,
           tickRotation: 0,
-          legend: "Num of Calls",
+          legend: "Sentiment",
           legendOffset: 10,
           legendPosition: "middle",
         }}
@@ -42,7 +42,7 @@ export default function LineGraph({ data, ...props }) {
         pointColor={{ theme: "background" }}
         pointBorderWidth={0}
         pointLabelYOffset={-12}
-        enablePointLabel={true}
+        // enablePointLabel={true}
         curve="monotoneX"
         pointLabel="y"
         useMesh={true}
