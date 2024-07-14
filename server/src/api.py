@@ -1,6 +1,11 @@
-from fastapi import Depends, FastAPI
+from typing import List
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from openai import BaseModel
+
+from src.schemas.requests import CompanyInfo, Person
+from src.together_wrapper import TogetherWrapper
 
 
 # Service initialization
@@ -19,3 +24,41 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return JSONResponse({"message": "API"})
+
+@app.get("/company-info")
+async def get_company_info(name: str):
+    # This is a mock implementation. In a real scenario, you'd fetch this data from a database or external API.
+    if not name:
+        raise HTTPException(status_code=400, detail="Company name is required")
+    
+    # Mock company info
+    company_info = {
+        "name": name,
+        "industry": "Technology",
+        "size": "1000-5000 employees",
+        "description": f"{name} is a leading technology company specializing in innovative solutions."
+    }
+    
+    return JSONResponse(company_info)
+
+class SimulateRequest(BaseModel):
+    company_info: CompanyInfo
+    person: Person
+    sales_pitch: List[str]
+
+@app.post("/api/simulate-sales-pitch")
+async def simulate_sales_pitch(request: SimulateRequest):
+    try:
+        # Initialize TogetherWrapper if not already initialized
+        if not hasattr(TogetherWrapper, 'client'):
+            TogetherWrapper.initialize()
+        
+        results = TogetherWrapper.simulate_once(
+            company_info=request.company_info,
+            person=request.person,
+            sales_pitch=request.sales_pitch
+        )
+        return JSONResponse({"results": [result.model_dump() for result in results]})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+

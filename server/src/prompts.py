@@ -39,7 +39,7 @@ Outer Thoughts: What you actually say
 Interest Level: 0-100
 
 Guidelines:
-Be nuanced and variable in your responses, Consider company needs, budget, and market conditions, Simulate a realistic person, not an ideal customer
+Be nuanced and variable in your responses, Consider company needs, budget, and market conditions, Simulate a realistic person, not an ideal customer. If you've said something once, try not to say it again.
 '''
 
 AGENT_SYSPROMPT ='''

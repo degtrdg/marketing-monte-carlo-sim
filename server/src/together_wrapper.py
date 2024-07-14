@@ -13,13 +13,13 @@ from typing import List
 class TogetherWrapper:
     @classmethod
     def initialize(cls):
-        cls.inital_client = openai.OpenAI(
+        cls.initial_client = openai.OpenAI(
             base_url="https://api.together.xyz/v1",
             api_key=TOGETHER_API_KEY,
         )
 
         cls.client = instructor.from_openai(
-            cls.inital_client, mode=instructor.Mode.TOOLS
+            cls.initial_client, mode=instructor.Mode.TOOLS
         )
 
     @classmethod
