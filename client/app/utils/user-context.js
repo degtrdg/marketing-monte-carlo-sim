@@ -50,27 +50,21 @@ export function UserProvider({ children }) {
       }
 
       const data = await response.json();
-      console.log("name", data.company_leaders[0].organization.name);
-      console.log("description", data.company_leaders[0].organization.industry);
 
-      let employees = [];
-      console.log(data);
-      for (const employee in data.company_leaders) {
-        employees.push({
-          name: employee.name,
-          title: employee.title,
-          description: "",
-        });
-      }
+      let employees = data.company_leaders.map((employee) => ({
+        person_name: employee.name,
+        person_title: employee.title,
+        person_description: employee.headline || "",
+      }));
 
-      sales_pitch = [
+      let sales_pitch = [
         "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Speck is solving everyday workplace challenges efficiently.",
         "With such growth, managing finances can become tricky. Are you finding it hard to keep your burn rate under control?",
         "At Hiline, we help over 300 businesses keep their finances in check. We handle daily bookkeeping, monthly reports, and payroll. We even helped Jahnel Group save $1M in taxes.",
         "Is this something you're dealing with? If so, just hit reply and let's chat.",
       ];
 
-      const getPersonInfo = async (person) => {
+      const getPersonInfo = async (data, person) => {
         const response = await fetch(
           `http://localhost:8080/api/simulate-sales-pitch`,
           {
@@ -81,38 +75,35 @@ export function UserProvider({ children }) {
             body: JSON.stringify({
               company_info: {
                 company_name: data.company_name,
-                company_description: data.description,
+                company_description: data.company_summary,
               },
               person: person,
               sales_pitch: sales_pitch,
             }),
           }
         );
-        const data = await response.json();
-        console.log(data);
+        return await response.json();
       };
-      let found_employees = [];
-      for (const person of employees) {
-        info = getPersonInfo(person);
-        if (info) {
-          found_employees.push(info);
-        }
-      }
+
+      let found_employees = await Promise.all(
+        employees.map((person) => getPersonInfo(data, person))
+      );
 
       setCompanyInfo({
         name: data.company_name,
         industry: data.industry,
-        tagline: data.tag_line,
-        description: data.description,
+        tagline: data.company_tagline,
+        description: data.company_summary,
         company_logo: data.logo_url,
         company_url: data.company_url,
-        employees: data.employees,
+        employees: data.estimated_num_employees,
         employee_list: found_employees,
         companyInfo: {
           ...data,
           ...companyInfo, // Merge with any existing companyInfo
         },
       });
+      console.log(companyInfo);
     } catch (error) {
       console.error("Error fetching company information:", error);
       // Set fallback info if fetch fails
