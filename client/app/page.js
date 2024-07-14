@@ -17,7 +17,7 @@ const Section = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0 }}
       >
-        <Image src="/logo.png" alt="AI Sales Thing" width={100} height={100} />
+        <Image src="/logo.png" alt="SalesSim" width={100} height={100} />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -25,7 +25,7 @@ const Section = () => {
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <Text fontSize="5xl" fontWeight="bold" mb={12}>
-          AI Sales Thing
+          SalesSim
         </Text>
       </motion.div>
       <motion.div

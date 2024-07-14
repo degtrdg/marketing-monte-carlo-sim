@@ -1,12 +1,17 @@
 "use client";
 
 import { HStack } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import ChatSection from "./chat-section";
 import GraphSection from "./graph-section";
 
 export default function InfoSection() {
   return (
     <HStack
+      as={motion.div}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.5, ease: "easeOut" }}
       bg="rgba(0, 10, 30, 0.15)"
       borderRadius="lg"
       mr={2}
