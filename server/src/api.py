@@ -63,11 +63,12 @@ async def simulate_sales_pitch(request: SimulateRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/api/fetch-all-company-information")
+@app.get("/api/fetch-all-company-information")
 async def fetch_all_company_information(company: str):
+    from src.llm_wrapper import CompanyInfoClass
     try:
 
-        company = CompanyInfo(company)
+        company = CompanyInfoClass(company)
         company.get_apollo_data(os.getenv('APOLLO_API_KEY'))
         company.get_company_leaders(os.getenv('APOLLO_API_KEY'))
 
