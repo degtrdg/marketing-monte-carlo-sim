@@ -14,3 +14,4 @@ class EnvConfig:
 config: EnvConfig = EnvConfig()
 
 TOGETHER_API_KEY = config("TOGETHER_API_KEY")
+OPENAI_API_KEY = config("OPENAI_API_KEY")

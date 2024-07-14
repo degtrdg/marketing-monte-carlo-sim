@@ -63,6 +63,7 @@ export function UserProvider({ children }) {
         description: employee.headline || "",
         title: employee.title,
         image: employee.photo_url,
+        linkedin_url: employee.linkedin_url,
       }));
 
       let sales_pitch = [

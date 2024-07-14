@@ -57,15 +57,17 @@ async def simulate_sales_pitch(request: SimulateRequest):
         # Initialize TogetherWrapper if not already initialized
         if not hasattr(TogetherWrapper, "client"):
             TogetherWrapper.initialize()
-
+        print("BBB")
         results = TogetherWrapper.simulate_once(
             company_info=request.company_info,
             person=request.person,
             sales_pitch=request.sales_pitch,
         )
+        print("AAA")
         return JSONResponse({"results": [result.model_dump() for result in results]})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+        return JSONResponse({"results": []})
 
 
 @app.get("/api/fetch-all-company-information")

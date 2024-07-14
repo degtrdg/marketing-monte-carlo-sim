@@ -7,6 +7,7 @@ import {
   HStack,
   IconButton,
   Image,
+  Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -136,13 +137,14 @@ export default function Sidebar(props) {
             pb={4}
           >
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <IconButton
-                aria-label="Company Website"
-                icon={<FaGlobe />}
-                href={companyInfo?.company_url}
-                size="sm"
-                colorScheme="green"
-              />
+              <Link href={companyInfo?.company_url} isExternal>
+                <IconButton
+                  aria-label="Company Website"
+                  icon={<FaGlobe />}
+                  size="sm"
+                  colorScheme="green"
+                />
+              </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <IconButton

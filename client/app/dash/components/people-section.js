@@ -1,6 +1,7 @@
-import { Image, Text, VStack, Wrap } from "@chakra-ui/react";
+import { Icon, Image, Link, Text, VStack, Wrap } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { FaLinkedin } from "react-icons/fa";
 import { useUser } from "../../utils/user-context";
 import TypingEffect from "./typing-effect";
 
@@ -63,47 +64,23 @@ const Person = ({ localPerson, person, setPerson, index }) => {
         <Text fontSize="sm" textAlign="left">
           <TypingEffect text={localPerson.description} />
         </Text>
+        <Link
+          href={localPerson.linkedin_url}
+          isExternal
+          color="blue.500"
+          fontSize="sm"
+          display="flex"
+          alignItems="center"
+        >
+          <Icon as={FaLinkedin} mr={1} />
+          LinkedIn Profile
+        </Link>
       </VStack>
     </button>
   );
 };
 
 export default function PeopleSection({ person, setPerson }) {
-  const people = [
-    {
-      name: "Emily Chen",
-      title: "Software Engineer",
-      description:
-        "Emily is a passionate coder with 5 years of experience in full-stack development. She excels at solving complex problems and is always eager to learn new technologies.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu2whjzwoBz71waeE07wh1L_sfjpdm6IIf7g&s",
-    },
-    {
-      name: "Michael Rodriguez",
-      title: "Product Manager",
-      description:
-        "Michael is a strategic thinker with a keen eye for market trends and user needs. He has successfully launched three major products in the last two years, driving significant revenue growth.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu2whjzwoBz71waeE07wh1L_sfjpdm6IIf7g&s",
-    },
-    {
-      name: "Sarah Kim",
-      title: "UX Designer",
-      description:
-        "Sarah is a creative problem-solver who puts users at the heart of her designs. Her innovative approaches have improved user engagement by 40% in her previous projects.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu2whjzwoBz71waeE07wh1L_sfjpdm6IIf7g&s",
-    },
-    {
-      name: "David Okonkwo",
-      title: "Data Scientist",
-      description:
-        "David is an analytical powerhouse with a PhD in Machine Learning. He has developed predictive models that have saved the company millions in operational costs.",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu2whjzwoBz71waeE07wh1L_sfjpdm6IIf7g&s",
-    },
-  ];
-
   const { companyInfo } = useUser();
 
   return (

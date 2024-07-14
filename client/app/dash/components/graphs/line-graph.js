@@ -31,7 +31,7 @@ export default function LineGraph({ data, ...props }) {
           tickSize: 8,
           tickPadding: 3,
           tickRotation: 0,
-          legend: "Sentiment",
+          legend: "Relative Sentiment",
           legendOffset: 10,
           legendPosition: "middle",
         }}

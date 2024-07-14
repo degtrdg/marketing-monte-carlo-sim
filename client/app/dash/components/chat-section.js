@@ -17,22 +17,21 @@ const Chat = ({ chat, salesPitch }) => {
           : "linear(to-l, red.50, transparent)"
       }
     >
-      <Text size="xs" fontWeight="bold">
+      <Text fontSize="xs" fontWeight="bold">
         Sales Pitch:
       </Text>
-      <Text size="sm">{salesPitch}</Text>
-      <Text size="xs" fontWeight="bold">
+      <Text fontSize="sm">{salesPitch}</Text>
+      <Text fontSize="xs" fontWeight="bold">
         Thoughts:
       </Text>
-      <Text size="sm">{chat.thoughts}</Text>
-      <Text size="xs" fontWeight="bold">
+      <Text fontSize="sm">{chat.thoughts}</Text>
+      <Text fontSize="xs" fontWeight="bold">
         Interest Level:
       </Text>
       <Text
-        size="sm"
         fontWeight="bold"
         fontSize="xl"
-        // color={chat.level_of_interest > 50 ? "green.500" : "red.500"}
+        color={chat.level_of_interest > 50 ? "green.600" : "red.600"}
       >
         {Math.max(
           0,

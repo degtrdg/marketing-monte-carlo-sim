@@ -62,7 +62,7 @@ export default function GraphSection({ person }) {
         overflow="hidden"
       >
         <Text h="10%" fontWeight="bold" transform="translateY(5px)">
-          Average Sentiment Over Time
+          Sentiment Over Time
         </Text>
         <LineGraph data={data} h="90%" w="full" />
       </VStack>

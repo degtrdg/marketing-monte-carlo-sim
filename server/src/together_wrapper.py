@@ -1,5 +1,5 @@
 from together import Together
-from src.config import TOGETHER_API_KEY
+from src.config import TOGETHER_API_KEY, OPENAI_API_KEY
 from src.prompts import sales_pitch_simulation_prompt, sales_pitch_system_short
 from src.schemas import Person, CompanyInfo, SalesPitchThoughts
 
@@ -14,8 +14,8 @@ class TogetherWrapper:
     @classmethod
     def initialize(cls):
         cls.initial_client = openai.OpenAI(
-            base_url="https://api.together.xyz/v1",
-            api_key=TOGETHER_API_KEY,
+            # base_url="https://api.together.xyz/v1",
+            # api_key=TOGETHER_API_KEY,
         )
 
         cls.client = instructor.from_openai(
@@ -32,6 +32,7 @@ class TogetherWrapper:
         results = []
 
         # parallelize this maybe, not big deal
+        print("TEST1")
         for idx in range(len(sales_pitch)):
             messages = [
                 {
@@ -54,20 +55,22 @@ class TogetherWrapper:
                     ),
                 },
             ]
+            print("TEST2")
 
             user: SalesPitchThoughts = cls.client.chat.completions.create(
-                model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+                # model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+                model="gpt-4o",
                 response_model=SalesPitchThoughts,
                 messages=messages,
             )
+            print("TEST3")
 
             assert isinstance(
                 user, SalesPitchThoughts
             ), "Should be instance of UserExtract"
-            print("-" * 50)
-            print(f"idx: {idx} {user.model_dump_json(indent=2)}")
-            print("-" * 50)
             results.append(user)
+
+        print("TEST4")
 
         return results
 
@@ -110,7 +113,7 @@ if __name__ == "__main__":
     )
 
     sales_pitch = [
-        "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Speck is solving everyday workplace challenges efficiently.",
+        "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Together AI is solving everyday workplace challenges efficiently.",
         "With such growth, managing finances can become tricky. Are you finding it hard to keep your burn rate under control?",
         "At Hiline, we help over 300 businesses keep their finances in check. We handle daily bookkeeping, monthly reports, and payroll. We even helped Jahnel Group save $1M in taxes.",
         "Is this something you're dealing with? If so, just hit reply and let's chat.",

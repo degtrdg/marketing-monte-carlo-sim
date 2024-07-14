@@ -61,7 +61,7 @@ const GenerateModal = ({ isOpen, onClose }) => {
       let cumulativeDelay = 0;
       stages.forEach((_, index) => {
         const randomDelay =
-          Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000; // Random delay between 1000ms and 4000ms
+          Math.floor(Math.random() * (10000 - 6000 + 1)) + 6000; // Random delay between 6000ms and 10000ms
         cumulativeDelay += randomDelay;
         setTimeout(() => {
           setVisibleStages((prev) => [...prev, index]);
