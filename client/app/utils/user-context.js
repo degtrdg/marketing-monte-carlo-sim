@@ -58,6 +58,12 @@ export function UserProvider({ children }) {
         person_title: employee.title,
         person_description: employee.headline || "",
       }));
+      let idk_employees = data.company_leaders.map((employee) => ({
+        name: employee.name,
+        description: employee.headline || "",
+        title: employee.title,
+        image: employee.photo_url,
+      }));
 
       let sales_pitch = [
         "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Speck is solving everyday workplace challenges efficiently.",
@@ -89,12 +95,9 @@ export function UserProvider({ children }) {
       };
       console.log("ODSODSODDOSKDOSD");
 
-      let found_employees = [];
-      for (let i = 0; i < employees.length; i++) {
-        const person = employees[i];
-        const employeeInfo = await getPersonInfo(data, person);
-        found_employees.push(employeeInfo);
-      }
+      let found_employees = await Promise.all(
+        employees.map((person) => getPersonInfo(data, person))
+      );
 
       console.log("FDJIIJDFI");
 
@@ -107,6 +110,7 @@ export function UserProvider({ children }) {
         company_url: data.company_url,
         employees: data.estimated_num_employees,
         employee_list: found_employees,
+        idk_employees: idk_employees,
         companyInfo: {
           ...data,
           ...companyInfo, // Merge with any existing companyInfo

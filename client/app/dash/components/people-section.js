@@ -1,6 +1,7 @@
 import { Image, Text, VStack, Wrap } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { useUser } from "../../utils/user-context";
 import TypingEffect from "./typing-effect";
 
 const Person = ({ localPerson, person, setPerson, index }) => {
@@ -103,6 +104,8 @@ export default function PeopleSection({ person, setPerson }) {
     },
   ];
 
+  const { companyInfo } = useUser();
+
   return (
     <VStack
       h="full"
@@ -115,7 +118,7 @@ export default function PeopleSection({ person, setPerson }) {
       transition={{ duration: 30, ease: "easeOut" }}
       overflowY="scroll"
     >
-      {people.map((localPerson, index) => (
+      {companyInfo?.idk_employees?.map((localPerson, index) => (
         <Person
           key={localPerson.name}
           localPerson={localPerson}
