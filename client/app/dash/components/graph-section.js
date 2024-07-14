@@ -1,33 +1,47 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Text, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import BarGraph from "./graphs/bar-graph";
 import LineGraph from "./graphs/line-graph";
 
 export default function GraphSection() {
-  const lineData = [
-    {
-      id: "API Calls",
-      data: [
-        { x: "2023-06-01", y: 5 },
-        { x: "2023-06-02", y: 8 },
-        { x: "2023-06-03", y: 12 },
-        { x: "2023-06-04", y: 7 },
-        { x: "2023-06-05", y: 15 },
-        { x: "2023-06-06", y: 10 },
-        { x: "2023-06-07", y: 18 },
-      ],
-    },
-  ];
+  const [lineData, setLineData] = useState([]);
 
-  const barData = [
-    { category: "Category A", value: 30 },
-    { category: "Category B", value: 45 },
-    { category: "Category C", value: 60 },
-    { category: "Category D", value: 25 },
-    { category: "Category E", value: 50 },
-  ];
+  useEffect(() => {
+    // Example data - replace this with your actual data source
+    const rawData = [
+      [5, 8, 12, 7, 15, 10, 18],
+      [6, 9, 11, 8, 14, 12, 17],
+      [4, 7, 13, 6, 16, 9, 19],
+    ];
+
+    processData(rawData);
+  }, []);
+
+  const processData = (rawData) => {
+    if (rawData.length === 0 || rawData[0].length === 0) {
+      setLineData([]);
+      return;
+    }
+
+    const averagedData = rawData[0].map((_, index) => {
+      const sum = rawData.reduce((acc, curr) => acc + curr[index], 0);
+      return sum / rawData.length;
+    });
+
+    const formattedData = averagedData.map((value, index) => ({
+      x: `Day ${index + 1}`,
+      y: value,
+    }));
+
+    setLineData([
+      {
+        id: "Average Values",
+        data: formattedData,
+      },
+    ]);
+  };
 
   return (
     <VStack
@@ -42,7 +56,7 @@ export default function GraphSection() {
     >
       <VStack
         w="full"
-        h="50%"
+        h="100%"
         borderRadius="lg"
         border="1px"
         borderColor="rgba(0,0,0,0.5)"
@@ -51,24 +65,9 @@ export default function GraphSection() {
         overflow="hidden"
       >
         <Text h="10%" fontWeight="bold" transform="translateY(5px)">
-          Graph 1
+          Average Values Over Time
         </Text>
-        <LineGraph data={lineData} h="full" w="full" />
-      </VStack>
-      <VStack
-        w="full"
-        h="50%"
-        borderRadius="lg"
-        border="1px"
-        borderColor="rgba(0,0,0,0.5)"
-        bg="linear-gradient(to top, rgba(5, 153, 233, 0.3), rgba(255, 255, 255, 1))"
-        boxShadow="0px 10px 10px -10px rgba(0,0,0,0.4)"
-        overflow="hidden"
-      >
-        <Text h="10%" fontWeight="bold" transform="translateY(5px)">
-          Graph 1
-        </Text>
-        <BarGraph data={barData} h="full" w="full" />
+        <LineGraph data={lineData} h="90%" w="full" />
       </VStack>
     </VStack>
   );
