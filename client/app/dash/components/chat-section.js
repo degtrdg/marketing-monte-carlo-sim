@@ -1,4 +1,6 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useUser } from "../../utils/user-context";
 
 const Chat = ({ chat }) => {
   return (
@@ -9,44 +11,17 @@ const Chat = ({ chat }) => {
       borderColor="rgba(0,0,0,0.1)"
       p={2}
     >
-      <Text>{chat}</Text>
+      <Text>Thoughts: {chat.thoughts}</Text>
+      <Text>Interest: {chat.level_of_interest}</Text>
     </Box>
   );
 };
 
-export default function ChatSection() {
-  const chats = [
-    "Test",
-    "Hi",
-    "Idk",
-    "What's up",
-    "Not much",
-    "How about you?",
-    "Not much",
-    "What are you up to?",
-    "Just hanging out",
-    "Cool",
-    "Test",
-    "Hi",
-    "Idk",
-    "What's up",
-    "Not much",
-    "How about you?",
-    "Not much",
-    "What are you up to?",
-    "Just hanging out",
-    "Cool",
-    "Test",
-    "Hi",
-    "Idk",
-    "What's up",
-    "Not much",
-    "How about you?",
-    "Not much",
-    "What are you up to?",
-    "Just hanging out",
-    "Cool",
-  ];
+export default function ChatSection({ person }) {
+  const { companyInfo } = useUser();
+  useEffect(() => {
+    console.log(companyInfo);
+  }, [companyInfo]);
 
   return (
     <Box w="50%" h="full" p={4}>
@@ -60,9 +35,10 @@ export default function ChatSection() {
         borderColor="gray.400"
         overflowY="scroll"
       >
-        {chats.map((chat, index) => (
-          <Chat key={index} chat={chat} />
-        ))}
+        {person &&
+          companyInfo?.employee_list[person.name]?.results?.map(
+            (chat, index) => <Chat key={index} chat={chat} />
+          )}
       </VStack>
     </Box>
   );

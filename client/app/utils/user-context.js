@@ -95,8 +95,12 @@ export function UserProvider({ children }) {
       };
       console.log("ODSODSODDOSKDOSD");
 
-      let found_employees = await Promise.all(
-        employees.map((person) => getPersonInfo(data, person))
+      let found_employees = {};
+      await Promise.all(
+        employees.map(async (person) => {
+          const personInfo = await getPersonInfo(data, person);
+          found_employees[person.person_name] = personInfo;
+        })
       );
 
       console.log("FDJIIJDFI");

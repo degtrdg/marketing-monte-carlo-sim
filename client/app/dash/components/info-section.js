@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import ChatSection from "./chat-section";
 import GraphSection from "./graph-section";
 
-export default function InfoSection() {
+export default function InfoSection({ person }) {
   return (
     <HStack
       as={motion.div}
@@ -21,7 +21,7 @@ export default function InfoSection() {
       w="70%"
       h="98%"
     >
-      <ChatSection />
+      <ChatSection person={person} />
       <GraphSection />
     </HStack>
   );

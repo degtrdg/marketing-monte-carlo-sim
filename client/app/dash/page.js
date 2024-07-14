@@ -12,7 +12,7 @@ const MainSection = (props) => {
   return (
     <HStack spacing={0} {...props}>
       <PeopleSection person={person} setPerson={setPerson} />
-      <InfoSection />
+      <InfoSection person={person} />
     </HStack>
   );
 };
