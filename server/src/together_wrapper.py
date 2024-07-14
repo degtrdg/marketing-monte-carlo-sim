@@ -78,31 +78,6 @@ class TogetherWrapper:
 
         return company_description[:40]
 
-    # @classmethod
-    # def simulate_many(cls,
-    #     people: List[Person],
-    #     sales_pitch: List[str],
-    #     company_info: CompanyInfo,
-    # ) -> List[PersonListThoughts]:
-    #     from concurrent.futures import ThreadPoolExecutor
-
-    #     print(len(people))
-    #     # from tqdm import tqdm
-
-    #     with ThreadPoolExecutor() as executor:
-    #         results = list(
-    #             # tqdm(
-    #             executor.map(cls.simulate_once, [company_info] * len(people), people, [sales_pitch] * len(people), list(range(len(people)))),
-    #             total=len(people),
-    #             desc="Simulating sales pitch",
-    #             unit="chunk",
-    #             # )
-    #         )
-
-    #     results = list(results)
-
-    #     return results
-
 
 if __name__ == "__main__":
     client = openai.OpenAI(
