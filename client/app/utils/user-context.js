@@ -31,6 +31,7 @@ export function UserProvider({ children }) {
   const searchCompany = async (name, companyInfo) => {
     setCompanyName(name);
     setCompanyInfo(null); // Reset company info while fetching
+    console.log("HEREE");
 
     try {
       const response = await fetch(
@@ -48,6 +49,7 @@ export function UserProvider({ children }) {
       if (!response.ok) {
         throw new Error("Failed to fetch company information");
       }
+      console.log("HERE");
 
       const data = await response.json();
 
@@ -63,6 +65,7 @@ export function UserProvider({ children }) {
         "At Hiline, we help over 300 businesses keep their finances in check. We handle daily bookkeeping, monthly reports, and payroll. We even helped Jahnel Group save $1M in taxes.",
         "Is this something you're dealing with? If so, just hit reply and let's chat.",
       ];
+      console.log("HEHRHRE");
 
       const getPersonInfo = async (data, person) => {
         const response = await fetch(
@@ -84,10 +87,16 @@ export function UserProvider({ children }) {
         );
         return await response.json();
       };
+      console.log("ODSODSODDOSKDOSD");
 
-      let found_employees = await Promise.all(
-        employees.map((person) => getPersonInfo(data, person))
-      );
+      let found_employees = [];
+      for (let i = 0; i < employees.length; i++) {
+        const person = employees[i];
+        const employeeInfo = await getPersonInfo(data, person);
+        found_employees.push(employeeInfo);
+      }
+
+      console.log("FDJIIJDFI");
 
       setCompanyInfo({
         name: data.company_name,
