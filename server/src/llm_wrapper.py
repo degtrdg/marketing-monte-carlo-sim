@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from openai import OpenAI
 
-class CompanyInfo:
+class LLMWrapper:
     def __init__(self, company_name, query_person_locations=None, query_seniority_levels=None, query_titles=None):
         self.apollo_data = None
         self.sitemap = None
