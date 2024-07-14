@@ -5,6 +5,17 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import BlurBackground from "./components/blur-background";
 import GenerateButton from "./components/generate-button";
+const post = `Hello Raghav,
+
+Congrats on raising $500k in your Pre-Seed funding round last year! I’m impressed with how Speck is solving everyday workplace challenges efficiently.
+
+With such growth, managing finances can become tricky. Are you finding it hard to keep your burn rate under control?
+
+At Hiline, we help over 300 businesses keep their finances in check. We handle daily bookkeeping, monthly reports, and payroll. We even helped Jahnel Group save $1M in taxes.
+
+Is this something you’re dealing with? If so, just hit reply and let’s chat.
+
+Best,`;
 
 const Section = () => {
   const [companyName, setCompanyName] = useState("");
@@ -64,11 +75,31 @@ const Section = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.9 }}
+        style={{ width: "100%", display: "flex", justifyContent: "center" }}
+      >
+        <Textarea
+          placeholder="Pitch"
+          w="50%"
+          mb={4}
+          border="1px"
+          borderColor="gray.400"
+          borderRadius="lg"
+          value={post}
+          disabled
+          style={{ backdropFilter: "blur(300px)", filter: "brightness(1.1)" }}
+          // onChange={(e) => setCompanyInfo(e.target.value)}
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         <GenerateButton
           companyName={companyName}
           companyDescription={companyInfo}
+          post={post}
         />
       </motion.div>
     </VStack>
