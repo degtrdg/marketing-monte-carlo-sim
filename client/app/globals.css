@@ -105,3 +105,43 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+/* Ensure 1px width for Firefox */
+* {
+  scrollbar-width: 1px;
+}
+
+/* For Internet Explorer and Edge */
+body {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/* Force 1px width for all browsers */
+html {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  width: 1px !important;
+}

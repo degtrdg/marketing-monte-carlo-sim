@@ -1,8 +1,11 @@
 import { Image, Text, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import TypingEffect from "./typing-effect";
 
 const Person = ({ name, description, image, index }) => {
+  const [nameDone, setNameDone] = useState(false);
+
   return (
     <VStack
       bg="rgba(0,0,0,0.1)"
@@ -30,24 +33,16 @@ const Person = ({ name, description, image, index }) => {
           borderRadius="md"
         />
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: index * 0.5 + 0.4 }}
-      >
-        <Text fontWeight="bold">
-          <TypingEffect text={name} />
-        </Text>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: index * 0.5 + 0.6 }}
-      >
+      <Text fontWeight="bold">
+        <TypingEffect text={name} setDone={setNameDone} />
+      </Text>
+      {nameDone ? (
         <Text fontSize="sm">
-          <TypingEffect text={description} />
+          <TypingEffect text={description} setDone={setNameDone} />
         </Text>
-      </motion.div>
+      ) : (
+        <Text fontSize="sm">&nbsp;</Text>
+      )}
     </VStack>
   );
 };
