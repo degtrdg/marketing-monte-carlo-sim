@@ -22,7 +22,7 @@ export default function InfoSection({ person }) {
       h="98%"
     >
       <ChatSection person={person} />
-      <GraphSection />
+      <GraphSection person={person} />
     </HStack>
   );
 }

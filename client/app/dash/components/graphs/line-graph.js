@@ -13,10 +13,7 @@ export default function LineGraph({ data, ...props }) {
         yScale={{
           type: "linear",
           min: 0,
-          max:
-            !data[0].data || data[0].data.every((item) => item.y <= 0)
-              ? 20
-              : "auto",
+          max: 100,
           stacked: true,
           reverse: false,
         }}

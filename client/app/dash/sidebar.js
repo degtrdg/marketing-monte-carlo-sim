@@ -100,7 +100,9 @@ export default function Sidebar(props) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.3 }}
         >
-          <Text size="sm">{companyInfo?.tagline || "N/A"}</Text>
+          <Text size="sm" textAlign="center">
+            {companyInfo?.tagline || "N/A"}
+          </Text>
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}
@@ -115,7 +117,7 @@ export default function Sidebar(props) {
           transition={{ delay: 0.8, duration: 0.3 }}
         >
           <Text fontSize="2xs">
-            {companyInfo?.employees || "Size not specified"}
+            {companyInfo?.employees || "Size not specified"} employees
           </Text>
         </motion.div>
         <motion.div

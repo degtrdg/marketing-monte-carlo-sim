@@ -5,9 +5,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import BlurBackground from "./components/blur-background";
 import GenerateButton from "./components/generate-button";
-const post = `Hello Raghav,
-
-Congrats on raising $500k in your Pre-Seed funding round last year! I’m impressed with how Speck is solving everyday workplace challenges efficiently.
+const post = `Congrats on raising $500k in your Pre-Seed funding round last year! I’m impressed with how Together AI is solving everyday workplace challenges efficiently.
 
 With such growth, managing finances can become tricky. Are you finding it hard to keep your burn rate under control?
 
@@ -20,6 +18,7 @@ Best,`;
 const Section = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyInfo, setCompanyInfo] = useState("");
+  const [salesPitch, setSalesPitch] = useState("");
 
   return (
     <VStack w="full" alignItems="center">
@@ -64,7 +63,6 @@ const Section = () => {
         <Textarea
           placeholder="Information about your company"
           w="40%"
-          mb={4}
           border="1px"
           borderColor="gray.400"
           borderRadius="lg"
@@ -81,12 +79,13 @@ const Section = () => {
         <Textarea
           placeholder="Pitch"
           w="50%"
+          h="20vw"
           mb={4}
           border="1px"
           borderColor="gray.400"
           borderRadius="lg"
-          value={post}
-          disabled
+          value={salesPitch}
+          onChange={(e) => setSalesPitch(e.target.value)}
           style={{ backdropFilter: "blur(300px)", filter: "brightness(1.1)" }}
           // onChange={(e) => setCompanyInfo(e.target.value)}
         />

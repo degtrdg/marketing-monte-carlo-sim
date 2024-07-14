@@ -66,7 +66,7 @@ export function UserProvider({ children }) {
       }));
 
       let sales_pitch = [
-        "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Speck is solving everyday workplace challenges efficiently.",
+        "Congrats on raising $500k in your Pre-Seed funding round last year! I'm impressed with how Together AI is solving everyday workplace challenges efficiently.",
         "With such growth, managing finances can become tricky. Are you finding it hard to keep your burn rate under control?",
         "At Hiline, we help over 300 businesses keep their finances in check. We handle daily bookkeeping, monthly reports, and payroll. We even helped Jahnel Group save $1M in taxes.",
         "Is this something you're dealing with? If so, just hit reply and let's chat.",

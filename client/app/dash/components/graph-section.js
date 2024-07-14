@@ -1,50 +1,44 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Text, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useUser } from "../../utils/user-context";
 import LineGraph from "./graphs/line-graph";
 
-export default function GraphSection() {
-  const [lineData, setLineData] = useState([{
-    id: "Average Values",
-    data:  [5, 8, 12, 7, 15, 10, 18],
-  }]);
+export default function GraphSection({ person }) {
+  const { companyInfo } = useUser();
+  const [data, setData] = useState([
+    {
+      id: "Average Values",
+      data: [],
+    },
+  ]);
+
+  const getData = () => {
+    if (!companyInfo || !person) return [];
+
+    const employeeData = companyInfo.employee_list[person.name]?.results;
+    if (!employeeData || !Array.isArray(employeeData)) return [];
+
+    return employeeData.map((item, index) => ({
+      x: index + 1,
+      y: item.level_of_interest,
+    }));
+  };
 
   useEffect(() => {
-    // Example data - replace this with your actual data source
-    const rawData = [
-      [5, 8, 12, 7, 15, 10, 18],
-      [6, 9, 11, 8, 14, 12, 17],
-      [4, 7, 13, 6, 16, 9, 19],
-    ];
-
-    processData(rawData);
-  }, []);
-
-  const processData = (rawData) => {
-    if (rawData.length === 0 || rawData[0].length === 0) {
-      setLineData([]);
-      return;
-    }
-
-    const averagedData = rawData[0].map((_, index) => {
-      const sum = rawData.reduce((acc, curr) => acc + curr[index], 0);
-      return sum / rawData.length;
-    });
-
-    const formattedData = averagedData.map((value, index) => ({
-      x: `Paragraph ${index + 1}`,
-      y: value,
-    }));
-
-    setLineData([
+    setData([
       {
-        id: "Average Values",
-        data: formattedData,
+        id: "Interest Level",
+        data: getData(),
       },
     ]);
-  };
+  }, [person, companyInfo]);
+
+  useEffect(() => {
+    console.log(companyInfo);
+  }, [companyInfo]);
 
   return (
     <VStack
@@ -70,7 +64,7 @@ export default function GraphSection() {
         <Text h="10%" fontWeight="bold" transform="translateY(5px)">
           Average Sentiment Over Time
         </Text>
-        <LineGraph data={lineData} h="90%" w="full" />
+        <LineGraph data={data} h="90%" w="full" />
       </VStack>
     </VStack>
   );
