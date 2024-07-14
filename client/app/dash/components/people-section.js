@@ -67,7 +67,7 @@ const Person = ({ localPerson, person, setPerson, index }) => {
   );
 };
 
-export default function SimulationSection({ person, setPerson }) {
+export default function PeopleSection({ person, setPerson }) {
   const people = [
     {
       name: "Emily Chen",

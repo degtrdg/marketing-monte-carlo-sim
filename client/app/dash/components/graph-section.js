@@ -32,19 +32,13 @@ export default function GraphSection() {
   return (
     <VStack
       h="98%"
-      w="40%"
+      w="50%"
       p={4}
       spacing={3}
       as={motion.div}
       initial={{ x: 100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 30, ease: "easeOut" }}
-      bg="rgba(0, 10, 30, 0.15)"
-      borderRadius="lg"
-      mr={2}
-      border="1px"
-      borderColor="rgba(0,0,0,0.3)"
-      boxShadow="0px 0px 10px 0px rgba(0,0,0,0.5)"
     >
       <VStack
         w="full"

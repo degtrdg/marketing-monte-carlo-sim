@@ -2,8 +2,8 @@
 
 import { Box, HStack } from "@chakra-ui/react";
 import { useState } from "react";
-import GraphSection from "./components/graph-section";
-import SimulationSection from "./components/simulation-section";
+import InfoSection from "./components/info-section";
+import PeopleSection from "./components/people-section";
 import Sidebar from "./sidebar";
 
 const MainSection = (props) => {
@@ -11,9 +11,8 @@ const MainSection = (props) => {
 
   return (
     <HStack spacing={0} {...props}>
-      <SimulationSection person={person} setPerson={setPerson} />
-      <Box w="30%" h="full"></Box>
-      <GraphSection person={person} />
+      <PeopleSection person={person} setPerson={setPerson} />
+      <InfoSection />
     </HStack>
   );
 };
