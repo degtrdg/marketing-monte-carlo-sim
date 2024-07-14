@@ -66,7 +66,10 @@ const Section = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
       >
-        <GenerateButton companyName={companyName} companyInfo={companyInfo} />
+        <GenerateButton
+          companyName={companyName}
+          companyDescription={companyInfo}
+        />
       </motion.div>
     </VStack>
   );

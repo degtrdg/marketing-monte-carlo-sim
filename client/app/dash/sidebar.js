@@ -16,7 +16,8 @@ import { FaGlobe, FaLinkedin } from "react-icons/fa";
 
 export default function Sidebar(props) {
   const router = useRouter();
-  const { companyName, companyInfo, searchCompany } = useUser();
+  const { companyName, companyInfo, searchCompany, pushCompanyInfo } =
+    useUser();
 
   const goHome = () => {
     router.push("/");

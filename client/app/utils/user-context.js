@@ -6,10 +6,12 @@ const UserContext = createContext({
   companyName: "",
   companyInfo: null,
   searchCompany: () => {},
+  pushCompanyInfo: () => {},
 });
 
 export function UserProvider({ children }) {
   const [companyName, setCompanyName] = useState("");
+  const [companyDescription, setCompanyDescription] = useState(null);
   const [companyInfo, setCompanyInfo] = useState(null);
 
   // const searchCompany = async (name, companyInfo, post) => {
@@ -78,8 +80,20 @@ export function UserProvider({ children }) {
     }
   };
 
+  const pushCompanyInfo = async (info) => {
+    setCompanyInfo(info);
+  };
+
   return (
-    <UserContext.Provider value={{ companyName, companyInfo, searchCompany }}>
+    <UserContext.Provider
+      value={{
+        companyName,
+        companyInfo,
+        companyDescription,
+        searchCompany,
+        pushCompanyInfo,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -123,7 +123,7 @@ export default function GenerateButton({ companyName, companyInfo, post }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
-  const { searchCompany } = useUser();
+  const { searchCompany, pushCompanyInfo } = useUser();
 
   const handleGenerate = () => {
     onOpen();
