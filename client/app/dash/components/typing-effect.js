@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function TypingEffect({ text, setDone }) {
+export default function TypingEffect({ text }) {
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
 
@@ -16,9 +16,6 @@ export default function TypingEffect({ text, setDone }) {
       } else {
         clearInterval(typingInterval);
         setIsTyping(false);
-        setTimeout(() => {
-          setDone(true);
-        }, 1000);
       }
     }, 50);
     return () => clearInterval(typingInterval);
