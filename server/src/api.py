@@ -3,6 +3,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from openai import BaseModel
+import os
 
 from src.schemas.requests import CompanyInfo, Person
 from src.together_wrapper import TogetherWrapper
@@ -62,3 +63,30 @@ async def simulate_sales_pitch(request: SimulateRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/fetch-all-company-information")
+async def fetch_all_company_information(company: str):
+    try:
+
+        company = CompanyInfo(company)
+        company.get_apollo_data(os.getenv('APOLLO_API_KEY'))
+        company.get_company_leaders(os.getenv('APOLLO_API_KEY'))
+
+        company.extract_sitemap()
+        company.get_important_pages()
+        company.download_and_parse_pages_selfmade()
+        company.analyze_with_llm(os.getenv('OPENAI_API_KEY'))
+
+        return JSONResponse({
+            "company_leaders": company.company_leaders, 
+            "company_summary": company.company_summary, 
+            "company_tagline": company.company_tagline,
+            "company_name": company.company_name,
+            "company_url": company.company_url,
+            "estimated_num_employees": company.estimated_num_employees,
+            "industry": company.industry,
+            "raw_address": company.raw_address,
+            "logo_url": company.logo_url
+        })
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
