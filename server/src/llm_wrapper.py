@@ -12,7 +12,7 @@ from src.together_wrapper import TogetherWrapper
 from src.prompts import query_titles_prompt
 
 
-class CompanyInfo:
+class LLMWrapper:
     def __init__(
         self,
         company_name,
